@@ -1,12 +1,11 @@
 import { Text } from "react-native";
 
 const HistoryScreen = ({ navigation, route }) => {
-    return <><Text>
-        This is History Screen</Text><Text>
-            This is History Screen</Text><Text>
-            This is History Screen</Text><Text>
-            This is History Screen</Text></>
-
+    return <>
+        <Text>
+            This is History Screenkkkkkkkkkkkkkkkkkdddnnnnnnnnnnnnnnnnnn
+        </Text>
+    </>
         ;
 };
 
