@@ -8,7 +8,7 @@ export const CrewNavigator = () => {
     return (
         <CrewStack.Navigator>
             <CrewStack.Screen
-                name="Crew"
+                name="CrewScreen"
                 component={CrewScreen}
                 options={{ title: 'CREW' }}
             />

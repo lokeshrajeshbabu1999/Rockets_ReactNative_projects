@@ -15,7 +15,7 @@ export const LaunchNavigator = () => {
                 headerTintColor: '#000',
             }}>
             <LaunchStack.Screen
-                name="LaunchPad"
+                name="LaunchPadScreen"
                 component={LaunchPadScreen}
             />
             <LaunchStack.Screen
