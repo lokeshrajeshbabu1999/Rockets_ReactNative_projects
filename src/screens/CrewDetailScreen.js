@@ -31,12 +31,19 @@ const CrewDetailScreen = () => {
                         <View>
                             {crewMember ? (
                                 <View>
-                                    <Text style={styles.text2}>{crewMember.agency}</Text>
-                                    <Text style={styles.text2}>STATUS: {crewMember.status}</Text>
-                                    <Text style={styles.text2}>LAUNCHES:{crewMember.launches}</Text>
-                                    <Text style={styles.text2}>ID: {crewMember.id}</Text>
+                                    <Text style={styles.text1}>AGENCY -
+                                        <Text style={styles.text2}>  {crewMember.agency}</Text>
+                                    </Text>
+                                    <Text style={styles.text1}>STATUS -
+                                        <Text style={styles.text2}>{crewMember.status}</Text>
+                                    </Text>
+                                    <Text style={styles.text1}>LAUNCHES -
+                                        <Text style={styles.text2}>{crewMember.launches}</Text>
+                                    </Text>
+                                    <Text style={styles.text1}>ID -
+                                        <Text style={styles.text2}>{crewMember.id}</Text>
+                                    </Text>
                                     <Button type='clear'>{crewMember.wikipedia}</Button>
-
                                 </View>
                             ) : (
                                 <Text>No data available</Text>
@@ -58,7 +65,14 @@ const styles = StyleSheet.create({
         height: 350,
     },
     text2: {
-        fontSize: 14,
+        fontSize: 16,
+        color: '#006400'
+
+    },
+    text1: {
+        fontSize: 20,
+        color: '#000'
+
     },
     container: {
         marginHorizontal: 2,
