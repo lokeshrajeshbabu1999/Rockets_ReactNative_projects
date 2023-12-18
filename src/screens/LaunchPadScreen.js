@@ -47,7 +47,6 @@ const LaunchPadScreen = ({ navigation }) => {
         </View>
     )
 }
-
 export default LaunchPadScreen;
 
 const styles = StyleSheet.create({
@@ -69,8 +68,6 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 200,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
         resizeMode: 'cover',
     },
     text2: {
