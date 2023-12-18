@@ -1,39 +1,69 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HistoryScreen from './src/screens/HistoryScreen';
-import HomeScreen from './src/screens/HomeScreen';
-import LaunchScreen from './src/screens/LaunchScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
-import RocketScreen from './src/screens/RocketScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { DefaultTheme, NavigationContainer, ThemeProvider } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { CrewNavigator } from './src/Components/CrewStack';
+import { LaunchNavigator } from './src/Components/LaunchStack';
+import { RocketNavigator } from './src/Components/RocketStack';
 
-
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const App = () => {
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: '#98fb98',
+    },
+  };
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{
-        headerShown: true,
-        headerStyle: {
-          backgroundColor: '#d8bfd8',
-        },
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-        headerTintColor: '#000',
-      }}>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: 'Welcome to Space X' }}
-        />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="History" component={HistoryScreen} />
-        <Stack.Screen name="Launch" component={LaunchScreen} />
-        <Stack.Screen name="Rockets" component={RocketScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ThemeProvider theme={MyTheme}>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={{
+            headerTitle: 'SPACE X',
+            headerTitleStyle: {
+              textAlign: 'center',
+              fontSize: 46,
+            },
+            headerStyle: {
+              backgroundColor: MyTheme.colors.primary,
+            },
+            headerTintColor: '#000',
+          }}>
+          <Tab.Screen
+            name="Rockets"
+            component={RocketNavigator}
+            options={{
+              tabBarLabel: 'Rockets',
+              tabBarIcon: ({ color }) => (
+                <Icon name="rocket" size={26} color={'blue'} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="LaunchPad"
+            component={LaunchNavigator}
+            options={{
+              tabBarLabel: 'LaunchPad',
+              tabBarIcon: ({ color }) => (
+                <Icon name="rocket-launch-outline" size={26} color={'blue'} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Crew"
+            component={CrewNavigator}
+            options={{
+              tabBarLabel: 'Crew',
+              tabBarIcon: ({ color }) => (
+                <Icon name="account-group-outline" size={26} color={'blue'} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer >
+    </ThemeProvider>
 
   )
 }
-export default App
+export default App;
