@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     },
     text2: {
         fontSize: 28,
-        color: '#2e8b57'
+        color: '#2e8b57',
+        textAlign: 'center'
     },
     container: {
         marginHorizontal: 2,
