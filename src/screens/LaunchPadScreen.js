@@ -1,63 +1,80 @@
 import { Text } from "@rneui/themed";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
-const LaunchPadScreen = ({ navigation, route }) => {
+const LaunchPadScreen = ({ navigation }) => {
     const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState({});
+    const [data, setData] = useState([]);
 
     const handleImagePress = (item) => {
         navigation.navigate('LaunchPadDetail', { id: item.id });
     };
+
     useEffect(() => {
         fetch('https://api.spacexdata.com/v4/launchpads')
             .then((response) => response.json())
-            .then((data) => setData(data))
+            .then((responseData) => setData(responseData))
             .catch((error) => console.error(error))
             .finally(() => setLoading(false));
     }, []);
+
+    const renderCard = ({ item }) => (
+        <TouchableOpacity onPress={() => handleImagePress(item)}>
+            <View style={styles.card}>
+                <Image
+                    style={styles.image}
+                    source={{
+                        uri: item.images.large[0]
+                    }}
+                />
+                <View style={styles.cardDetails}>
+                    <Text style={styles.text2}>{item.name}</Text>
+                    <Text>{item.full_name}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
+    );
 
     return (
         <View style={styles.container}>
             {isLoading ? <ActivityIndicator /> :
                 <FlatList
                     data={data}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity key={item.id} onPress={() => handleImagePress(item)}>
-                            <View style={styles.container}>
-                                <Text style={styles.text2}>{item.name}</Text>
-                                <Text>{item.full_name}</Text>
-                                <Image
-                                    style={styles.image}
-                                    source={{
-                                        uri: item.images.large[0]
-                                    }} />
-                            </View>
-                        </TouchableOpacity>
-                    )
-                    }
+                    renderItem={renderCard}
                     keyExtractor={(item) => item.id.toString()}
                 />
             }
-        </View >
+        </View>
     )
 }
 
-export default LaunchPadScreen
+export default LaunchPadScreen;
+
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        marginTop: 20,
+        paddingHorizontal: 8,
+    },
+    card: {
+        marginBottom: 20,
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        shadowColor: '#000',
+        elevation: 5,
+    },
+    cardDetails: {
+        padding: 12,
+    },
     image: {
-        marginTop: 10,
-        width: 375,
-        height: 350,
+        width: '100%',
+        height: 200,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
+        resizeMode: 'cover',
     },
     text2: {
         fontSize: 28,
         color: '#006400'
     },
-    container: {
-        marginHorizontal: 4,
-    },
-    cardstyle: {
-        padding: 10,
-    },
-})
+});
