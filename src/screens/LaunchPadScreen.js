@@ -25,13 +25,13 @@ const LaunchPadScreen = ({ navigation, route }) => {
                     renderItem={({ item }) => (
                         <TouchableOpacity key={item.id} onPress={() => handleImagePress(item)}>
                             <View style={styles.container}>
+                                <Text style={styles.text2}>{item.name}</Text>
+                                <Text>{item.full_name}</Text>
                                 <Image
                                     style={styles.image}
                                     source={{
                                         uri: item.images.large[0]
                                     }} />
-                                <Text style={styles.text2}>{item.name}</Text>
-                                <Text>{item.full_name}</Text>
                             </View>
                         </TouchableOpacity>
                     )
