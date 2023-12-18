@@ -19,7 +19,7 @@ export const RocketNavigator = () => {
                 component={RocketScreen}
             />
             <RocketStack.Screen
-                name="RocketDetail"
+                name="RocketDetailScreen"
                 component={RocketDetailScreen}
             />
         </RocketStack.Navigator>

@@ -1,45 +1,62 @@
 import { useRoute } from "@react-navigation/native";
 import { Card, Text } from "@rneui/themed";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, ScrollView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 
 const RocketDetailScreen = () => {
-    const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState({});
     const route = useRoute();
-    const { rocketId } = route.params;
+    const { id } = route.params;
+    const [isLoading, setLoading] = useState(true);
+    const [crewMember, setCrewMember] = useState(null);
 
     useEffect(() => {
-        fetch('https://api.spacexdata.com/v4/rockets')
+        fetch(`https://api.spacexdata.com/v4/rockets/${id}`)
             .then((response) => response.json())
-            .then((data) => setData(data))
-            .catch((error) => console.error(error))
-            .finally(() => setLoading(false));
-    }, []);
+            .then((data) => {
+                setCrewMember(data)
+                setLoading(false)
+            })
+            .catch((error) => {
+                console.error(error);
+                setLoading(false);
+            });
+    }, [id]);
     return (
         <View style={styles.container}>
             <Card>
                 <ScrollView>
-                    {isLoading ? <ActivityIndicator /> :
+                    {isLoading ? (<ActivityIndicator />
+                    ) : (
                         <View>
-                            <FlatList
-                                data={data}
-                                renderItem={({ item }) => (
-                                    <View key={item.id}>
-                                        <Text> {item.name}</Text>
-                                        <Text> {item.type}</Text>
-                                    </View>
-                                )}
-                                keyExtractor={(item, index) => index.toString()}
-                            />
+                            {crewMember ? (
+                                <View>
+                                    <Text style={styles.text1}>
+                                        <Text style={styles.text1}>{crewMember.name}</Text>
+                                    </Text>
+                                    <Text style={styles.text3}>TYPE -
+                                        <Text style={styles.text2}>  {crewMember.type}</Text>
+                                    </Text>
+                                    <Text style={styles.text3}>COST PER LAUNCH-
+                                        <Text style={styles.text2}>{crewMember.cost_per_launch}</Text>
+                                    </Text>
+                                    <Text style={styles.text3}>FIRST FLIGHT -
+                                        <Text style={styles.text2}>{crewMember.first_flight}</Text>
+                                    </Text>
+                                    <Text style={styles.text3}>DESCRIPTION -
+                                        <Text style={styles.text2}>{crewMember.description}</Text>
+                                    </Text>
+                                </View>
+                            ) : (
+                                <Text>no data available</Text>
+                            )}
                         </View>
-                    }
+                    )}
                 </ScrollView>
             </Card>
         </View >
     );
 }
-export default RocketDetailScreen
+export default RocketDetailScreen;
 
 const styles = StyleSheet.create({
     image: {
@@ -48,7 +65,16 @@ const styles = StyleSheet.create({
         height: 350,
     },
     text2: {
-        fontSize: 14,
+        fontSize: 18,
+    },
+    text3: {
+        fontSize: 24,
+        color: '#006400',
+    },
+    text1: {
+        fontSize: 40,
+        color: '#006400',
+        textAlign: 'center'
     },
     container: {
         marginHorizontal: 2,
