@@ -3,19 +3,6 @@ import { Card } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const CrewCard = ({ item, handleImagePress }) => {
-    return (
-        <Card style={styles.card}>
-            <TouchableOpacity onPress={() => handleImagePress(item)}>
-                <View>
-                    <Text style={styles.text2}>{item.name}</Text>
-                    <Image style={styles.image} source={{ uri: item.image }} />
-                </View>
-            </TouchableOpacity>
-        </Card>
-    );
-};
-
 const CrewScreen = () => {
     const navigation = useNavigation();
     const [isLoading, setLoading] = useState(true);
@@ -24,7 +11,18 @@ const CrewScreen = () => {
     const handleImagePress = (item) => {
         navigation.navigate('CrewDetailScreen', { id: item.id });
     };
-
+    const CrewCard = ({ item, handleImagePress }) => {
+        return (
+            <Card style={styles.card}>
+                <TouchableOpacity onPress={() => handleImagePress(item)}>
+                    <View>
+                        <Text style={styles.text2}>{item.name}</Text>
+                        <Image style={styles.image} source={{ uri: item.image }} />
+                    </View>
+                </TouchableOpacity>
+            </Card>
+        );
+    };
     useEffect(() => {
         fetch('https://api.spacexdata.com/v4/crew')
             .then((response) => response.json())
