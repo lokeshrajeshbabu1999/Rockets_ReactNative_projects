@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Card } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const CrewScreen = () => {
     const navigation = useNavigation();
@@ -11,19 +11,22 @@ const CrewScreen = () => {
     const handleImagePress = (item) => {
         navigation.navigate('CrewDetailScreen', { id: item.id });
     };
+
     const CrewCard = ({ item, handleImagePress }) => {
         return (
-            <Card style={styles.card}>
+            <><Card style={styles.card}>
                 <TouchableOpacity onPress={() => handleImagePress(item)}>
                     <View>
                         <Text style={styles.text2}>{item.name}</Text>
                         <Image style={styles.image} source={{ uri: item.image }} />
                     </View>
                 </TouchableOpacity>
-            </Card>
+            </Card></>
         );
     };
+
     useEffect(() => {
+        setLoading(true)
         fetch('https://api.spacexdata.com/v4/crew')
             .then((response) => response.json())
             .then((data) => {
@@ -31,10 +34,17 @@ const CrewScreen = () => {
                 setLoading(false);
             })
             .catch((error) => console.error(error));
-    }, []);
 
+    }, []);
     return (
         <SafeAreaView>
+            <TextInput
+                clearButtonMode="always"
+                style={styles.textinput}
+                placeholder='search'
+                autoCapitalize='none'
+                autoCorrect={false}
+            />
             <View style={styles.container}>
                 {isLoading ? (
                     <ActivityIndicator />
@@ -63,6 +73,14 @@ const styles = StyleSheet.create({
     },
     container: {
         marginHorizontal: 2,
+    },
+    textinput: {
+        marginHorizontal: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 8,
     },
     card: {
         marginVertical: 10,
