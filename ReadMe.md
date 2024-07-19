@@ -1,2 +1,1 @@
-### I have started a new React Native project and pushed to a github repository
-   ## I have used some third party packages for improvement
+### I have started a new React Native project on the concept of Rockets and the other details of the rockets.
